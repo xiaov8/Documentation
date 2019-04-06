@@ -31,7 +31,7 @@ This page describes the token (Agora’s authentication mechanism). Before you s
 </tbody>
 </table>
 
-To get the SDK version information, call the following API methods:
+To get the SDK version, call the following API methods:
 - Native SDK: `getSdkVersion`
 - Web SDK: `AgoraRTC.VERSION`
 - Gaming SDK: `getSdkVersion`
@@ -78,9 +78,9 @@ Anyone with your App ID can use it on any Agora SDK. Hence, it is prudent to saf
    <img alt="../_images/appid_2.jpg" src="https://web-cdn.agora.io/docs-files/en/appid_2.jpg" />
 
 
-### Using an App ID
+### Authenticate using App ID only
 
-You can access the Agora services with the unique App ID:
+You can access Agora services with an unique App ID:
 
 1.  Enter the App ID in the start window to enable communications.
 2.  Add the App ID to the code when developing the application.
@@ -89,29 +89,34 @@ You can access the Agora services with the unique App ID:
 
 <a name = "Token"></a>
 
-## Token
+## Authenticate using Token
 
+For production level applicatoins, it is highly recommended to use a combination of App ID and Token for authentication. 
 The following process generates a token:
 
 1.  Deploy a token generator on your server.
 2.  The client sends a request for a token to the server.
 3.  The server uses the token generator to create a token and sends the token back to the client.
-4.  The client passes in the token when joining a channel.
+4.  The client passes the token when joining a channel.
 5.  When the token is about to expire or has expired, repeat Steps 2 to 4.
 6.  The application client calls `renewToken` to use the new token.
 
 
 ### Deploying a Token Generator
 
-Before using a token, you need to deploy a token generator on your server to generate a token.
+To use token for authentication, you need to deploy a token generator on your server to generate a token.
 
-Agora provides the server-side [sample code](https://github.com/AgoraIO/Tools/tree/master/DynamicKey/AgoraDynamicKey).
+Agora provides the server-side [sample code](https://github.com/AgoraIO/Tools/tree/master/DynamicKey/AgoraDynamicKey) that support the following languages: 
+- C++
+- Go
+- Java
+- Node.js
+- Python
+- PHP
+- Perl
 
-You can deploy the corresponding sample code on your server, or write your own code in a different programming language.
+You can use either the sample code or the SimpleTokenBuilder that encapsulates the underlying Token sample code. 
 
-If you have implemented Agora’s algorithm in other languages, you can file a pull request on [GitHub](https://github.com/AgoraIO/Tools/tree/master/DynamicKey/AgoraDynamicKey). Agora will merge any valid implementations and test cases.
-
-<a name = "Generate_Token"></a>
 ### Generating a Token
 
 The application client needs to send the following parameters to the server to generate a token:
@@ -176,7 +181,7 @@ To get an App Certificate:
       <img alt="../_images/view_app_certificate.png" src="https://web-cdn.agora.io/docs-files/en/view_app_certificate.png" />
 
 
-> -   Keep the App Certificate on the server, never on any client machine.
+> -   Keep the App Certificate on the server, never on any client.
 > 
 > -   The App Certificate takes about an hour to take effect after it is enabled.
 > 
